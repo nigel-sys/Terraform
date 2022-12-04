@@ -56,8 +56,3 @@ resource "aws_security_group" "AWS-instance" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-resource "aws_eip" "AWS-instance" {
-  instance = aws_instance.AWS-instance.id
-  vpc      = true
-}
