@@ -20,7 +20,7 @@ resource "tls_private_key" "AWS-instance" {
 
 resource "aws_key_pair" "generated_key" {
   key_name   = "team15_key_pair"
-  public_key = "${tls_private_key.example.public_key_openssh}"
+  public_key = "${tls_private_key.AWS-instance.public_key_openssh}"
 }
 
 resource "aws_instance" "AWS-instance" {
@@ -33,7 +33,7 @@ resource "aws_instance" "AWS-instance" {
 
     connection {
       type        = "ssh"
-      private_key =  "${tls_private_key.example.private_key_pem}"
+      private_key =  "${tls_private_key.AWS-instance.private_key_pem}"
       user        = "ubuntu"
       timeout     = "1m"
       host = self.public_ip
