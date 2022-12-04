@@ -13,7 +13,7 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-resource "tls_private_key" "example" {
+resource "tls_private_key" "AWS-instance" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
