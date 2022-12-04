@@ -13,17 +13,27 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+resource "tls_private_key" "ec2_Terraform" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = "ec2_Terraform_key_pair"
+  public_key = "${tls_private_key.example.public_key_openssh}"
+}
+
 resource "aws_instance" "ec2_Terraform" {
   ami = "ami-001c1ab2631f48e96"
   instance_type = "t2.micro"
-  key_name = "team15_dependencies"
+  key_name = aws_key_pair.generated_key.key_name
   tags = {
     Name = "Team15_Terraform"
   }
 
     connection {
       type        = "ssh"
-      private_key = file("team15_dependencies.pem")
+      private_key = "${tls_private_key.AWS-instance.private_key_pem}"
       user        = "ubuntu"
       timeout     = "1m"
       host = self.public_ip
@@ -57,11 +67,3 @@ resource "aws_security_group" "ec2_Terraform" {
   }
 }
 
-resource "aws_eip" "EIP" {
-  instance = aws_instance.ec2_Terraform.id
-  vpc = true
-  
-  tags = {
-    Name = "EIP"
-  }
-}
