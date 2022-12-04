@@ -13,27 +13,17 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-resource "tls_private_key" "AWS-instance" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "generated_key" {
-  key_name   = "team15_key_pair"
-  public_key = "${tls_private_key.AWS-instance.public_key_openssh}"
-}
-
 resource "aws_instance" "AWS-instance" {
   ami = "ami-001c1ab2631f48e96"
   instance_type = "t2.micro"
-  key_name = aws_key_pair.generated_key.key_name
+  key_name = "team15_dependencies"
   tags = {
     Name = "Team15"
   }
 
     connection {
       type        = "ssh"
-      private_key =  "${tls_private_key.AWS-instance.private_key_pem}"
+      private_key =  file("team15_dependencies.pem")
       user        = "ubuntu"
       timeout     = "1m"
       host = self.public_ip
