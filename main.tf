@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "AWS-instance" {
-  ami = "ami-001c1ab2631f48e96"
+  ami = "ami-00daffb0d753df675"
   instance_type = "t2.micro"
   key_name = "team15_dependencies"
   tags = {
