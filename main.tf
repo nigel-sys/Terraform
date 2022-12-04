@@ -56,3 +56,12 @@ resource "aws_security_group" "ec2_Terraform" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_eip" "EIP" {
+  instance = aws_instance.ec2_Terraform.id
+  vpc = true
+  
+  tags = {
+    Name = "EIP"
+  }
+}
