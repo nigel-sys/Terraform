@@ -13,12 +13,12 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-resource "aws_instance" "AWS-instance" {
+resource "aws_instance" "ec2_Terraform" {
   ami = "ami-001c1ab2631f48e96"
   instance_type = "t2.micro"
   key_name = "team15_dependencies"
   tags = {
-    Name = "Team15"
+    Name = "Team15_Terraform"
   }
 
     connection {
@@ -31,7 +31,7 @@ resource "aws_instance" "AWS-instance" {
 } 
 
 
-resource "aws_security_group" "AWS-instance" {
+resource "aws_security_group" "ec2_Terraform" {
   name        = "team15_ssh"
   description = "grant ssh permission"
 
