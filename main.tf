@@ -41,17 +41,33 @@ resource "aws_security_group" "AWS-instance" {
   description = "grant ssh permission"
   vpc_id = aws_vpc.AWS-instance.id
 
-  ingress {
+    ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   ingress {
-    self = true
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_security_group_rule" "AWS-instance" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = [aws_vpc.AWS_instance.cidr_block]
+  security_group_id = aws_security_group.AWS-instance.id
 }
