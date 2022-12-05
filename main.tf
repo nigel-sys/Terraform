@@ -13,23 +13,6 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-resource "aws_instance" "AWS-instance" {
-  ami = "ami-00daffb0d753df675"
-  instance_type = "t2.micro"
-  key_name = "team15_dependencies"
-  tags = {
-    Name = "Team15"
-  }
-
-    connection {
-      type        = "ssh"
-      private_key =  file("team15_dependencies.pem")
-      user        = "ubuntu"
-      timeout     = "1m"
-      host = self.public_ip
-    }
-} 
-
 resource "aws_vpc" "AWS-instance" {
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -49,6 +32,14 @@ resource "aws_security_group" "AWS-instance" {
   }
 
   ingress {
+    self = true
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
@@ -63,10 +54,20 @@ resource "aws_security_group" "AWS-instance" {
   }
 }
 
-resource "aws_security_group_rule" "AWS-instance" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  security_group_id = aws_security_group.AWS-instance.id
-}
+resource "aws_instance" "AWS-instance" {
+  ami = "ami-00daffb0d753df675"
+  instance_type = "t2.micro"
+  key_name = "team15_dependencies"
+  security_groups = aws_security_group.AWS-instance
+  tags = {
+    Name = "Team15"
+  }
+
+    connection {
+      type        = "ssh"
+      private_key =  file("team15_dependencies.pem")
+      user        = "ubuntu"
+      timeout     = "1m"
+      host = self.public_ip
+    }
+} 
