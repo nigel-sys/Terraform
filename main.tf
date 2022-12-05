@@ -30,10 +30,20 @@ resource "aws_instance" "AWS-instance" {
     }
 } 
 
+resource "aws_vpc" "AWS-instance" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support = true
+  tags {
+    Name = "AWS-instance"
+  }
+}
+
 
 resource "aws_security_group" "AWS-instance" {
   name        = "team15_ssh"
   description = "grant ssh permission"
+  vpc_id = aws_vpc.AWS-instance.id
 
   ingress {
     from_port   = 22
@@ -41,12 +51,11 @@ resource "aws_security_group" "AWS-instance" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+  
   ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 
   egress {
