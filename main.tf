@@ -66,7 +66,6 @@ resource "aws_instance" "AWS-instance" {
 } 
 
 resource "aws_eip" "EIP" {
-  name = "team15_elastic_ip"
   instance = aws_instance.AWS-instance.id
   vpc = true
 }
