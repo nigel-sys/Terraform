@@ -34,11 +34,7 @@ resource "aws_vpc" "AWS-instance" {
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support = true
-  tags {
-    Name = "AWS-instance"
-  }
 }
-
 
 resource "aws_security_group" "AWS-instance" {
   name        = "team15_ssh"
