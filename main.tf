@@ -65,7 +65,7 @@ resource "aws_instance" "AWS-instance" {
     }
 } 
 
-resource "aws_eip" "EIP" {
-  instance = aws_instance.AWS-instance.id
-  vpc = true
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.AWS-instance.id
+  allocation_id = "eipalloc-09e71893d1944a1bd"
 }
