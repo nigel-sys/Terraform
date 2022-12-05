@@ -64,3 +64,9 @@ resource "aws_instance" "AWS-instance" {
       host = self.public_ip
     }
 } 
+
+resource "aws_eip" "EIP" {
+  name = "team15_elastic_ip"
+  instance = aws_instance.AWS-instance.id
+  vpc = true
+}
