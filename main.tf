@@ -58,7 +58,7 @@ resource "aws_instance" "AWS-instance" {
   ami = "ami-00daffb0d753df675"
   instance_type = "t2.micro"
   key_name = "team15_dependencies"
-  vpc_security_group_ids = [vpc_id]
+  vpc_security_group_ids = [aws_security_group.AWS-instance.vpc_id]
   tags = {
     Name = "Team15"
   }
