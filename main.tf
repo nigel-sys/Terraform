@@ -11,6 +11,8 @@ terraform {
 
 provider "aws" {
   region = "eu-west-1"
+  access_key = "ASIATUYJP7SUESOGPV37"
+  secret_key = "d+79S8DbnJcdnAh/ooRa1wuXmGSTZWB59scxpvuB"
 }
 
 resource "aws_security_group" "AWS-instance" {
