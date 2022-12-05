@@ -68,6 +68,5 @@ resource "aws_security_group_rule" "AWS-instance" {
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks       = [aws_vpc.AWS_instance.cidr_block]
   security_group_id = aws_security_group.AWS-instance.id
 }
